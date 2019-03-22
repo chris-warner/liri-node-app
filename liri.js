@@ -1,8 +1,10 @@
 require("dotenv").config();
 var keys = require("./keys.js");
+var randomtrack = require("./random.txt");
 var Spotify = require('node-spotify-api');
 var axios = require("axios");
 var moment = require("moment");
+var fs = require('fs');
 var spotify = new Spotify(keys.spotify);
 var inputCommand = process.argv[2];
 var inputCommand2 = process.argv[3];
@@ -30,6 +32,37 @@ function concert_this() {
 
 function spotify_this_song() {
     console.log("spotify_this_song() executed");
+    var track = inputCommand2;
+    if (track = "") {
+        //access random track
+        fs.readFile('random.txt', 'utf-8', (err, data) => {
+            var randomtrackSplit = data.split(",");
+            console.log(randomtrackSplit[1]);
+            if (err) throw err;
+        });
+
+    }
+    else {
+    spotify
+    .search({ type: 'track', query: track })
+    .then(function(response) {
+     var songdata = {
+        artistName: response.tracks.items[0].artists[0].name,
+        songName: response.tracks.items[0].name,
+        previewLink: response.tracks.items[0].external_urls.spotify,
+        album: response.tracks.items[0].album.name
+     };
+   console.log("---------------------------------------------------------------------");
+   console.log("Artist: " + songdata.artistName);
+   console.log("Song Name: " + songdata.songName);
+   console.log("Preview Link: " + songdata.previewLink);
+   console.log("Album: " + songdata.album);
+   console.log("---------------------------------------------------------------------");
+})
+.catch(function(err) {
+  console.log(err);
+});
+    }
 }
 
 function movie_this() {
