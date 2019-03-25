@@ -1,5 +1,6 @@
 require("dotenv").config();
 var keys = require("./keys.js");
+var randomtrack = require("./random.txt");
 var Spotify = require('node-spotify-api');
 var axios = require("axios");
 var moment = require("moment");
@@ -32,11 +33,10 @@ function concert_this() {
 function spotify_this_song() {
     console.log("spotify_this_song() executed");
     var track = inputCommand2;
-    var randomtrackSplit = [];
     if (track = "") {
         //access random track
-        fs.readFile('./random.txt', 'utf-8', (err, data) => {
-           randomtrackSplit = data.split(",");
+        fs.readFile('random.txt', 'utf-8', (err, data) => {
+            var randomtrackSplit = data.split(",");
             console.log(randomtrackSplit[1]);
             if (err) throw err;
         });
@@ -44,7 +44,7 @@ function spotify_this_song() {
     }
     else {
     spotify
-    .search({ type: 'track', query: randomtrackSplit[1]})
+    .search({ type: 'track', query: track })
     .then(function(response) {
      var songdata = {
         artistName: response.tracks.items[0].artists[0].name,
