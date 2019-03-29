@@ -1,5 +1,5 @@
 {
-  "name": "liri-node-app",
+  "name": "liri-node-ap",
   "version": "1.0.0",
   "description": "A cli spotify app.",
   "main": "app.js",

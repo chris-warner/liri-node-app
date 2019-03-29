@@ -33,18 +33,11 @@ function spotify_this_song() {
     console.log("spotify_this_song() executed");
     var track = inputCommand2;
     var randomtrackSplit = [];
-    if (track = "") {
-        //access random track
-        fs.readFile('./random.txt', 'utf-8', (err, data) => {
-           randomtrackSplit = data.split(",");
-            console.log(randomtrackSplit[1]);
-            if (err) throw err;
-        });
-
-    }
-    else {
+    if (track === undefined) {
+        track = "What's my age again";
+      }
     spotify
-    .search({ type: 'track', query: randomtrackSplit[1]})
+    .search({ type: 'track', query: track})
     .then(function(response) {
      var songdata = {
         artistName: response.tracks.items[0].artists[0].name,
@@ -58,19 +51,47 @@ function spotify_this_song() {
    console.log("Preview Link: " + songdata.previewLink);
    console.log("Album: " + songdata.album);
    console.log("---------------------------------------------------------------------");
-})
-.catch(function(err) {
-  console.log(err);
 });
-    }
+
 }
 
 function movie_this() {
-    console.log("movie_this() executed");
+    if (movieTitle === undefined) {
+        movieTitle = "Mr Nobody";
+      }
+    
+      var urlHit =
+        "http://www.omdbapi.com/?t=" + movieTitle + "&y=&plot=full&tomatoes=true&apikey=trilogy";
+    
+      axios.get(urlHit).then(
+        function(response) {
+          var jsonData = response.data;
+    
+          console.log("Title: " + jsonData.Title);
+          console.log("Year: " + jsonData.Year);
+          console.log("Rated: " + jsonData.Rated);
+          console.log("IMDB Rating: " + jsonData.imdbRating);
+          console.log("Country: " + jsonData.Country);
+          console.log("Language: " + jsonData.Language);
+          console.log("Plot: " + jsonData.Plot);
+          console.log("Actors: " + jsonData.Actors);
+          console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
+        }
+      );
 }
 
 function do_what_it_says() {
-    console.log("do_what_it_says() executed");
+    fs.readFile("random.txt", "utf8", function(error, data) {
+        console.log(data);
+    
+        var dataArr = data.split(",");
+    
+        if (dataArr.length === 2) {
+          pick(dataArr[0], dataArr[1]);
+        } else if (dataArr.length === 1) {
+          pick(dataArr[0]);
+        }
+      });
 }
 
 switch(inputCommand) {
