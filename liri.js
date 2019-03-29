@@ -29,8 +29,11 @@ function concert_this() {
 );
 }
 
-function spotify_this_song() {
+function spotify_this_song(input) {
     console.log("spotify_this_song() executed");
+    if(input){
+        movieTitle = input
+    }
     var track = inputCommand2;
     var randomtrackSplit = [];
     if (track === undefined) {
@@ -55,7 +58,12 @@ function spotify_this_song() {
 
 }
 
-function movie_this() {
+function movie_this(input) {
+    if(input){
+        movieTitle = input
+    }
+    else {
+    var movieTitle = inputCommand2;
     if (movieTitle === undefined) {
         movieTitle = "Mr Nobody";
       }
@@ -78,21 +86,35 @@ function movie_this() {
           console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
         }
       );
+    }
 }
 
 function do_what_it_says() {
+
+
     fs.readFile("random.txt", "utf8", function(error, data) {
         console.log(data);
     
         var dataArr = data.split(",");
     
-        if (dataArr.length === 2) {
-          pick(dataArr[0], dataArr[1]);
-        } else if (dataArr.length === 1) {
-          pick(dataArr[0]);
-        }
+        switch(dataArr) {
+            case "concert-this":
+            concert_this();
+            break;
+            case "spotify-this-song":
+            spotify_this_song(dataArr[1]);
+            break;
+            case "movie-this":
+            movie_this(dataArr[1]);
+            break;
+            case "do-what-it-says":
+            do_what_it_says();
+            break;
+        }   
       });
+    
 }
+
 
 switch(inputCommand) {
     case "concert-this":
