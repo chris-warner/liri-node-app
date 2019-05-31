@@ -1,7 +1,10 @@
-# Liri	
-## Use Liri to find the latest Concerts, Bands, and songs you love, from your console. Using Spotify, Bandsintown and omdb, Liri can retrieve concert dates for your favorite bands, movie information for your favorite films, song information for you favorite songs.	
+# Liri Node App
+## Find the latest Concerts, Bands, and songs you love, from your console. 
+
+Built with Spotify api, Bandsintown api and omdb api.
+
 **Instructions**
-Run Liri by typing `node liri` in terminal, followed by one of the following commands:
+1. Run Liri by typing `node liri` in terminal, followed by one of the following commands:
 spotifiy-this-song
 concert-this "band name"
 do-what-it-says
